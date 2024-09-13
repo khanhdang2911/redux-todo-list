@@ -6,6 +6,8 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToDo } from '../../redux/action'
 import { todoRemaningSelector } from '../../redux/selectors'
+import { v4 as uuidv4 } from 'uuid'
+
 export default function TodoList() {
 	const [todoName, setTodoName] = useState('')
 	const [priority, setPriority] = useState('Medium')
@@ -18,7 +20,7 @@ export default function TodoList() {
 		setPriority(value)
 	}
 	const handleAddTodo = () => {
-		dispatch(addToDo({ name: todoName, priority: priority, completed: false }))
+		dispatch(addToDo({ id: uuidv4(), name: todoName, priority: priority, completed: false }))
 	}
 	return (
 		<Row style={{ height: 'calc(100% - 40px)' }}>
@@ -26,10 +28,10 @@ export default function TodoList() {
 				span={24}
 				style={{ height: 'calc(100% - 40px)', overflowY: 'auto' }}
 			>
-				{todoList.map((todo, index) => {
+				{todoList.map((todo) => {
 					return (
 						<Todo
-							key={index}
+							key={todo.id}
 							id={todo.id}
 							name={todo.name}
 							prioriry={todo.priority}
