@@ -4,10 +4,9 @@ import { Col, Row, Input, Button, Select, Tag } from 'antd'
 import Todo from '../Todo'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToDo } from '../../redux/action'
 import { todoRemaningSelector } from '../../redux/selectors'
 import { v4 as uuidv4 } from 'uuid'
-
+import todoListSlice from './todoListSlice'
 export default function TodoList() {
 	const [todoName, setTodoName] = useState('')
 	const [priority, setPriority] = useState('Medium')
@@ -20,7 +19,7 @@ export default function TodoList() {
 		setPriority(value)
 	}
 	const handleAddTodo = () => {
-		dispatch(addToDo({ id: uuidv4(), name: todoName, priority: priority, completed: false }))
+		dispatch(todoListSlice.actions.addToDo({ id: uuidv4(), name: todoName, priority: priority, completed: false }))
 	}
 	return (
 		<Row style={{ height: 'calc(100% - 40px)' }}>
